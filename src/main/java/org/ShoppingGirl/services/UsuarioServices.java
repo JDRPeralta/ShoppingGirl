@@ -5,4 +5,6 @@ import org.ShoppingGirl.bean.entity.Usuario;
 public interface UsuarioServices {
 
 	 public Usuario login(String correo, String clave);
+	 
+	 public Usuario registrar(Usuario u);
 }
