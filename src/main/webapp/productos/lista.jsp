@@ -1,15 +1,15 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.ProductoModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Producto" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    List<ProductoModel> lista = (List<ProductoModel>) request.getAttribute("listaProductos");
+    List<Producto> lista = (List<Producto>) request.getAttribute("listaProductos");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -262,8 +262,8 @@
             <h2>Lista de Productos</h2>
 
             <div class="action-buttons">
-                <a href="<%= request.getContextPath() %>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
-                <a href="<%= request.getContextPath() %>/ProductoController?accion=nuevo" class="btn btn-primary">Nuevo producto</a>
+                <a href="<%=request.getContextPath()%>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
+                <a href="<%=request.getContextPath()%>/ProductoController?accion=nuevo" class="btn btn-primary">Nuevo producto</a>
             </div>
         </div>
 
@@ -286,8 +286,8 @@
                     </thead>
                     <tbody>
                         <%
-                            if (lista != null && !lista.isEmpty()) {
-                                for (ProductoModel p : lista) {
+                        if (lista != null && !lista.isEmpty()) {
+                                                        for (Producto p : lista) {
                         %>
                         <tr>
                             <td><%= p.getIdProducto() %></td>

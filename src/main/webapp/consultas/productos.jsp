@@ -1,15 +1,15 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.ProductoModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Producto" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    List<ProductoModel> lista = (List<ProductoModel>) request.getAttribute("listaConsultaProductos");
+    List<Producto> lista = (List<Producto>) request.getAttribute("listaConsultaProductos");
     String texto = request.getParameter("texto") != null ? request.getParameter("texto") : "";
 %>
 <!DOCTYPE html>
@@ -278,16 +278,16 @@
 
         <div class="header-actions">
             <h2>Consulta de Productos</h2>
-            <a href="<%= request.getContextPath() %>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
+            <a href="<%=request.getContextPath()%>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
         </div>
 
         <div class="search-card">
             <h3>Buscar productos</h3>
             <p>Filtra por nombre, talla o color.</p>
 
-            <form action="<%= request.getContextPath() %>/ConsultaController" method="get" class="search-form">
+            <form action="<%=request.getContextPath()%>/ConsultaController" method="get" class="search-form">
                 <input type="hidden" name="accion" value="productos">
-                <input type="text" name="texto" value="<%= texto %>" placeholder="Escribe nombre, talla o color">
+                <input type="text" name="texto" value="<%=texto%>" placeholder="Escribe nombre, talla o color">
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
         </div>
@@ -309,8 +309,8 @@
                     </thead>
                     <tbody>
                         <%
-                            if (lista != null && !lista.isEmpty()) {
-                                for (ProductoModel p : lista) {
+                        if (lista != null && !lista.isEmpty()) {
+                                                        for (Producto p : lista) {
                         %>
                         <tr>
                             <td><%= p.getIdProducto() %></td>

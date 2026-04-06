@@ -1,15 +1,15 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.ClienteModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Cliente" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    List<ClienteModel> lista = (List<ClienteModel>) request.getAttribute("listaClientes");
+    List<Cliente> lista = (List<Cliente>) request.getAttribute("listaClientes");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -252,8 +252,8 @@
             <h2>Lista de Clientes</h2>
 
             <div class="action-buttons">
-                <a href="<%= request.getContextPath() %>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
-                <a href="<%= request.getContextPath() %>/ClienteController?accion=nuevo" class="btn btn-primary">Nuevo cliente</a>
+                <a href="<%=request.getContextPath()%>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
+                <a href="<%=request.getContextPath()%>/ClienteController?accion=nuevo" class="btn btn-primary">Nuevo cliente</a>
             </div>
         </div>
 
@@ -270,8 +270,8 @@
                     </thead>
                     <tbody>
                         <%
-                            if (lista != null && !lista.isEmpty()) {
-                                for (ClienteModel c : lista) {
+                        if (lista != null && !lista.isEmpty()) {
+                                                        for (Cliente c : lista) {
                         %>
                         <tr>
                             <td><%= c.getIdCliente() %></td>

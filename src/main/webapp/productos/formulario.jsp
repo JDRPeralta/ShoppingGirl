@@ -1,24 +1,24 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.ProductoModel" %>
-<%@ page import="model.ProveedorModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Producto" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Proveedor" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    ProductoModel producto = (ProductoModel) request.getAttribute("producto");
-    List<ProveedorModel> listaProveedores = (List<ProveedorModel>) request.getAttribute("listaProveedores");
+    Producto producto = (Producto) request.getAttribute("producto");
+    List<Proveedor> listaProveedores = (List<Proveedor>) request.getAttribute("listaProveedores");
     boolean esEdicion = (producto != null);
 %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title><%= esEdicion ? "Editar Producto" : "Nuevo Producto" %></title>
+<title><%=esEdicion ? "Editar Producto" : "Nuevo Producto"%></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -212,55 +212,55 @@
 
         <div class="card">
             <div class="card-header">
-                <h2><%= esEdicion ? "Editar Producto" : "Nuevo Producto" %></h2>
+                <h2><%=esEdicion ? "Editar Producto" : "Nuevo Producto"%></h2>
                 <p>Completa la información del producto para registrarlo correctamente.</p>
             </div>
 
-            <form action="<%= request.getContextPath() %>/ProductoController" method="post">
-                <input type="hidden" name="accion" value="<%= esEdicion ? "actualizar" : "guardar" %>">
-                <input type="hidden" name="idProducto" value="<%= esEdicion ? producto.getIdProducto() : 0 %>">
+            <form action="<%=request.getContextPath()%>/ProductoController" method="post">
+                <input type="hidden" name="accion" value="<%=esEdicion ? "actualizar" : "guardar"%>">
+                <input type="hidden" name="idProducto" value="<%=esEdicion ? producto.getIdProducto() : 0%>">
 
                 <div class="form-grid">
                     <div class="form-group full">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" required
-                               value="<%= esEdicion ? producto.getNombre() : "" %>">
+                               value="<%=esEdicion ? producto.getNombre() : ""%>">
                     </div>
 
                     <div class="form-group full">
                         <label for="descripcion">Descripción</label>
                         <input type="text" id="descripcion" name="descripcion"
-                               value="<%= esEdicion ? producto.getDescripcion() : "" %>">
+                               value="<%=esEdicion ? producto.getDescripcion() : ""%>">
                     </div>
 
                     <div class="form-group">
                         <label for="talla">Talla</label>
                         <input type="text" id="talla" name="talla"
-                               value="<%= esEdicion ? producto.getTalla() : "" %>">
+                               value="<%=esEdicion ? producto.getTalla() : ""%>">
                     </div>
 
                     <div class="form-group">
                         <label for="color">Color</label>
                         <input type="text" id="color" name="color"
-                               value="<%= esEdicion ? producto.getColor() : "" %>">
+                               value="<%=esEdicion ? producto.getColor() : ""%>">
                     </div>
 
                     <div class="form-group">
                         <label for="precioCompra">Precio Compra</label>
                         <input type="number" step="0.01" id="precioCompra" name="precioCompra" required
-                               value="<%= esEdicion ? producto.getPrecioCompra() : "" %>">
+                               value="<%=esEdicion ? producto.getPrecioCompra() : ""%>">
                     </div>
 
                     <div class="form-group">
                         <label for="precioVenta">Precio Venta</label>
                         <input type="number" step="0.01" id="precioVenta" name="precioVenta" required
-                               value="<%= esEdicion ? producto.getPrecioVenta() : "" %>">
+                               value="<%=esEdicion ? producto.getPrecioVenta() : ""%>">
                     </div>
 
                     <div class="form-group">
                         <label for="stock">Stock</label>
                         <input type="number" id="stock" name="stock" required
-                               value="<%= esEdicion ? producto.getStock() : "" %>">
+                               value="<%=esEdicion ? producto.getStock() : ""%>">
                     </div>
 
                     <div class="form-group">
@@ -268,9 +268,9 @@
                         <select id="idProveedor" name="idProveedor" required>
                             <option value="">Seleccione</option>
                             <%
-                                if (listaProveedores != null) {
-                                    for (ProveedorModel pr : listaProveedores) {
-                                        boolean seleccionado = esEdicion && pr.getIdProveedor() == producto.getIdProveedor();
+                            if (listaProveedores != null) {
+                                                                for (Proveedor pr : listaProveedores) {
+                                                                    boolean seleccionado = esEdicion && pr.getIdProveedor() == producto.getIdProveedor();
                             %>
                             <option value="<%= pr.getIdProveedor() %>" <%= seleccionado ? "selected" : "" %>>
                                 <%= pr.getNombre() %>

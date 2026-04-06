@@ -1,14 +1,14 @@
-<%@ page import="model.ProveedorModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Proveedor" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    ProveedorModel proveedor = (ProveedorModel) request.getAttribute("proveedor");
+    Proveedor proveedor = (Proveedor) request.getAttribute("proveedor");
     boolean esEdicion = (proveedor != null);
 %>
 <!DOCTYPE html>

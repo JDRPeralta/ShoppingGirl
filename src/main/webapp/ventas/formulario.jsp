@@ -1,17 +1,17 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.ClienteModel" %>
-<%@ page import="model.ProductoModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Cliente" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Producto" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    List<ClienteModel> listaClientes = (List<ClienteModel>) request.getAttribute("listaClientes");
-    List<ProductoModel> listaProductos = (List<ProductoModel>) request.getAttribute("listaProductos");
+    List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("listaClientes");
+    List<Producto> listaProductos = (List<Producto>) request.getAttribute("listaProductos");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -317,11 +317,11 @@ function agregarFila() {
         '<td>' +
             '<select name="idProducto" onchange="actualizarFila(this)" required>' +
                 '<option value="">Seleccione</option>' +
-                '<% if (listaProductos != null) { for (ProductoModel p : listaProductos) { %>' +
+                '<%if (listaProductos != null) { for (Producto p : listaProductos) {%>' +
                     '<option value="<%= p.getIdProducto() %>" data-precio="<%= p.getPrecioVenta() %>">' +
-                        '<%= p.getNombre() %> - Stock: <%= p.getStock() %>' +
+                        '<%=p.getNombre()%> - Stock: <%=p.getStock()%>' +
                     '</option>' +
-                '<% } } %>' +
+                '<%} }%>' +
             '</select>' +
         '</td>' +
         '<td><input type="number" step="0.01" name="precio" readonly></td>' +
@@ -387,22 +387,22 @@ window.onload = function () {
                     <p>Selecciona el cliente y agrega los productos al detalle de venta.</p>
                 </div>
 
-                <a href="<%= request.getContextPath() %>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
+                <a href="<%=request.getContextPath()%>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
             </div>
 
-            <form action="<%= request.getContextPath() %>/VentaController" method="post">
+            <form action="<%=request.getContextPath()%>/VentaController" method="post">
                 <div class="form-section">
                     <label for="idCliente">Cliente</label>
                     <select name="idCliente" id="idCliente" required>
                         <option value="">Seleccione</option>
                         <%
-                            if (listaClientes != null) {
-                                for (ClienteModel c : listaClientes) {
+                        if (listaClientes != null) {
+                                                                                for (Cliente c : listaClientes) {
                         %>
-                        <option value="<%= c.getIdCliente() %>"><%= c.getNombre() %></option>
+                        <option value="<%=c.getIdCliente()%>"><%=c.getNombre()%></option>
                         <%
-                                }
-                            }
+                        }
+                                                    }
                         %>
                     </select>
                 </div>
@@ -429,8 +429,8 @@ window.onload = function () {
                                         <select name="idProducto" onchange="actualizarFila(this)" required>
                                             <option value="">Seleccione</option>
                                             <%
-                                                if (listaProductos != null) {
-                                                    for (ProductoModel p : listaProductos) {
+                                            if (listaProductos != null) {
+                                                                                                for (Producto p : listaProductos) {
                                             %>
                                             <option value="<%= p.getIdProducto() %>" data-precio="<%= p.getPrecioVenta() %>">
                                                 <%= p.getNombre() %> - Stock: <%= p.getStock() %>

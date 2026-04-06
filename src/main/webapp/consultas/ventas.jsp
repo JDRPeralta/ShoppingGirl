@@ -1,15 +1,15 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.VentaModel" %>
-<%@ page import="model.UsuarioModel" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Venta" %>
+<%@ page import="org.ShoppingGirl.bean.entity.Usuario" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect(request.getContextPath() + "/LoginController");
         return;
     }
 
-    List<VentaModel> lista = (List<VentaModel>) request.getAttribute("listaConsultaVentas");
+    List<Venta> lista = (List<Venta>) request.getAttribute("listaConsultaVentas");
 
     String fechaInicio = request.getParameter("fechaInicio") != null ? request.getParameter("fechaInicio") : "";
     String fechaFin = request.getParameter("fechaFin") != null ? request.getParameter("fechaFin") : "";
@@ -282,29 +282,29 @@
 
         <div class="header-actions">
             <h2>Consulta de Ventas</h2>
-            <a href="<%= request.getContextPath() %>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
+            <a href="<%=request.getContextPath()%>/inicio.jsp" class="btn btn-light">Volver al inicio</a>
         </div>
 
         <div class="search-card">
             <h3>Filtrar ventas</h3>
             <p>Busca por rango de fechas o por nombre del cliente.</p>
 
-            <form action="<%= request.getContextPath() %>/ConsultaController" method="get" class="search-form">
+            <form action="<%=request.getContextPath()%>/ConsultaController" method="get" class="search-form">
                 <input type="hidden" name="accion" value="ventas">
 
                 <div class="form-group">
                     <label for="fechaInicio">Fecha inicio</label>
-                    <input type="date" id="fechaInicio" name="fechaInicio" value="<%= fechaInicio %>">
+                    <input type="date" id="fechaInicio" name="fechaInicio" value="<%=fechaInicio%>">
                 </div>
 
                 <div class="form-group">
                     <label for="fechaFin">Fecha fin</label>
-                    <input type="date" id="fechaFin" name="fechaFin" value="<%= fechaFin %>">
+                    <input type="date" id="fechaFin" name="fechaFin" value="<%=fechaFin%>">
                 </div>
 
                 <div class="form-group">
                     <label for="cliente">Cliente</label>
-                    <input type="text" id="cliente" name="cliente" value="<%= cliente %>" placeholder="Nombre del cliente">
+                    <input type="text" id="cliente" name="cliente" value="<%=cliente%>" placeholder="Nombre del cliente">
                 </div>
 
                 <div class="form-group">
@@ -326,8 +326,8 @@
                     </thead>
                     <tbody>
                         <%
-                            if (lista != null && !lista.isEmpty()) {
-                                for (VentaModel v : lista) {
+                        if (lista != null && !lista.isEmpty()) {
+                                                        for (Venta v : lista) {
                         %>
                         <tr>
                             <td><%= v.getIdVenta() %></td>
